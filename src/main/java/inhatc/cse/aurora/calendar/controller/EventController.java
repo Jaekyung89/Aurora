@@ -1,16 +1,15 @@
-package inhatc.cse.aurora.calendar;
+package inhatc.cse.aurora.calendar.controller;
 
+import inhatc.cse.aurora.calendar.service.EventService;
+import inhatc.cse.aurora.calendar.entity.Event;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/events")
 public class EventController {
 

@@ -1,14 +1,26 @@
 server:
-  port: 8080
+  port: 80
+
 spring:
   application:
     name: Aurora
+
+  devtools:
+    restart:
+      enabled: true # 서버 재시작
+
+    livereload:
+      enabled: true # 화면 갱신
+
+  thymeleaf:
+    cache: false # 캐시 안함
 
   jackson:
     time-zone: Asia/Seoul
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://172.30.1.73:3306/aurora
     url: jdbc:mysql://localhost:3306/aurora
     username: root
     password: 1234

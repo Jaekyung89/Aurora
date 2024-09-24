@@ -1,10 +1,14 @@
-package inhatc.cse.aurora.calendar;
+package inhatc.cse.aurora.calendar.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
 @Setter
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 public class EventDTO {
 
     public String title;

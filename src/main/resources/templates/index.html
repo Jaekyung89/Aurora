@@ -40,54 +40,50 @@
 <div id="plannerModal" class="modal">
   <div class="modal-content">
     <span class="close close-planner-modal">&times;</span>
-    <h3>오늘의 계획</h3>
+    <div id="planner-container">
+      <header>
+        <div id="current-date">오늘 날짜: <span id="clickedDate"></span></div>
+        <nav>
+          <span>오늘 일정</span>
+        </nav>
+      </header>
+      <div id="planner-content">
+        <!-- 목표 설정 -->
+        <div id="goal-setting">
+          <h3>목표 설정</h3>
+          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
+          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
+          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
+          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
+          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
+          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
+        </div>
 
-    <!-- 일정 추가 -->
-    <form id="addEventForm2">
-      <label for="start2">오늘 날짜:</label><br>
-      <input type="date" id="start2" name="start" required><br><br>
-    </form>
+        <!-- 타임스탬프 -->
+        <div id="timestamp-grid">
+          <h3>타임스탬프</h3>
+          <div id="timestamp-table" class="timestamp-grid"></div>
+        </div>
 
-    <!-- 목표 설정 -->
-    <div id="goal-setting">
-      <h3>목표 설정</h3>
-      <div>
-        <input type="text" id="goal1Text" placeholder="목표 입력">
-        <input type="checkbox" id="goal1Checkbox">
+        <!-- 색상 선택 -->
+        <div id="color-palette">
+          <h3>색상 팔레트</h3>
+          <input type="color" id="colorPicker" value="#ff0000"> <!-- 기본 빨간색 선택 -->
+        </div>
       </div>
-      <div>
-        <input type="text" id="goal2Text" placeholder="목표 입력">
-        <input type="checkbox" id="goal2Checkbox">
+
+
+      <!-- 피드백 섹션 -->
+      <div id="feedback">
+        <h3>피드백</h3>
+        <textarea id="feedbackInput" rows="4" cols="50" placeholder="오늘의 피드백을 적어주세요"></textarea>
       </div>
     </div>
-
-    <!-- 타임스탬프 -->
-    <div id="timestamp-grid">
-      <h3>타임스탬프</h3>
-      <div id="timestamp-table"></div>
-    </div>
-
-    <!-- 컬러 팔레트 -->
-    <div id="color-palette">
-      <h3>색상 선택</h3>
-      <div class="color-option" data-color="red" style="background-color: red;"></div>
-      <div class="color-option" data-color="blue" style="background-color: blue;"></div>
-      <div class="color-option" data-color="green" style="background-color: green;"></div>
-      <div class="color-option" data-color="yellow" style="background-color: yellow;"></div>
-    </div>
-
-    <!-- 피드백 -->
-    <div id="feedback">
-      <h3>피드백</h3>
-      <textarea id="feedbackInput" rows="4" cols="50" placeholder="오늘의 피드백을 적어주세요"></textarea>
-    </div>
-
-    <!-- 저장 버튼 -->
-    <button id="savePlanner">저장</button>
   </div>
 </div>
 
 <!-- 외부 JS 파일 연결 -->
 <script src="/js/scripts.js"></script>
+
 </body>
 </html>

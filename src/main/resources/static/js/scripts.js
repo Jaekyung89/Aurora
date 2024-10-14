@@ -21,7 +21,25 @@ document.addEventListener('DOMContentLoaded', function() {
         dateClick: function(info) {  // 날짜 클릭 시 Planner 모달 열기
             console.log("날짜가 클릭되었습니다:", info.dateStr);  // 콘솔 로그 추가
             plannerModal.style.display = "block";  // Planner 모달 열기
-            document.getElementById('start2').value = info.dateStr;  // 클릭한 날짜를 Planner 폼에 설정
+            document.getElementById('clickedDate').innerText = info.dateStr;  // 클릭한 날짜를 Planner에 표시
+
+            // 클릭한 날짜에 맞는 일정 가져오기
+            fetch(`/api/events/${info.dateStr}`)
+                .then(response => response.json())
+                .then(events => {
+                    var eventDetails = '';
+                    if (events.length === 0) {
+                        eventDetails = '일정이 없습니다.';
+                    } else {
+                        events.forEach(event => {
+                            eventDetails += `${event.title} - ${event.time}<br>`;
+                        });
+                    }
+                    document.getElementById('schedule-content').innerHTML = eventDetails;  // 일정 표시
+                })
+                .catch(error => {
+                    console.error('Error fetching events:', error);
+                });
         }
     });
 
@@ -55,7 +73,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // 타임스탬프 24시간 * 6열 생성
     for (let i = 0; i < 24 * 6; i++) {
         let div = document.createElement('div');
-        div.dataset.time = `${Math.floor(i / 6)}:${(i % 6) * 10}`;
+        let hour = Math.floor(i / 6);
+        let minute = (i % 6) * 10;
+        div.dataset.time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
         div.classList.add('timestamp-cell');
         div.addEventListener('click', function() {
             this.style.backgroundColor = selectedColor;  // 선택한 색상으로 배경색 변경

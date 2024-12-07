@@ -1,7 +1,6 @@
-package inhatc.cse.aurora.goal.entity;
+package inhatc.cse.aurora.schedule.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import inhatc.cse.aurora.goal.constant.GoalStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,17 +13,18 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Goal {
+public class Schedule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "goal_id")
     private Long id;
 
+    private String title;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @JoinColumn(name = "start")
-    private LocalDate date;
+    private LocalDate start;
 
-    private String goal;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate end;
 
-    private GoalStatus completion;
 }

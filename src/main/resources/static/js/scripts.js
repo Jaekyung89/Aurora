@@ -21,22 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
         events: '/api/events',  // API로부터 이벤트 불러오기
         dateClick: function(info) {
             plannerModal.style.display = "block";
-            document.getElementById('clickedDate').innerText = info.dateStr;
-
-            console.log(`/api/events/${info.dateStr}`);
-            fetch(`/api/events/${info.dateStr}`)
-                .then(response => response.json())
-                .then(events => {
-                    if (Array.isArray(events) && events.length > 0) {
-                        let eventDetails = events.map(event => `${event.title}`).join("<br>");
-                        document.getElementById('schedule-content').innerHTML = eventDetails;
-                    } else {
-                        document.getElementById('schedule-content').innerHTML = "일정이 없습니다.";
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching events:", error);
-                });
+            selectedDate = info.dateStr; // 클릭한 날짜를 변수에 저장
+            document.getElementById('clickedDate').innerText = selectedDate;
         }
     });
 
@@ -54,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Planner 모달 닫기 (데이터 저장 후 닫기)
     closePlannerModal.onclick = function() {
-        saveData(); // 모달 닫기 전에 데이터 저장
+        saveData();
         plannerModal.style.display = "none";
     };
 
@@ -64,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
             addEventModal.style.display = "none";
         }
         if (event.target == plannerModal) {
-            saveData(); // 모달 닫기 전에 데이터 저장
+            saveData();
             plannerModal.style.display = "none";
         }
     };
@@ -86,82 +72,10 @@ document.addEventListener('DOMContentLoaded', function() {
         timestampTable.appendChild(div);
     }
 
-    // 날짜별 데이터를 불러오는 함수
-    function loadData(date) {
-        fetch(`/api/planner/getData?date=${date}`)
-            .then(response => response.json())
-            .then(data => {
-                document.querySelectorAll('.goal-input').forEach((input, idx) => {
-                    const goal = data.find(item => item.type === 'GOAL' && item.goalOrder === idx);
-                    if (goal) {
-                        input.value = goal.content;
-                        input.nextElementSibling.checked = goal.isCompleted;
-                    }
-                });
-
-                document.getElementById('feedbackInput').value = data.find(item => item.type === 'FEEDBACK')?.content || '';
-
-                document.querySelectorAll('.timestamp-cell').forEach((cell) => {
-                    const timestamp = data.find(item => item.type === 'TIMESTAMP' && item.timeSlot === cell.dataset.time);
-                    cell.style.backgroundColor = timestamp ? timestamp.color : '#FFFFFF';
-                });
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }
-
-    function saveData() {
-        const date = document.getElementById('clickedDate').innerText;
-        if (!date) {
-            console.error('Date is missing. Cannot save data.');
-            return;
-        }
-
-        const goalData = Array.from(document.querySelectorAll('.goal-input')).map((input, idx) => ({
-            date,
-            type: 'GOAL',
-            content: input.value,
-            isCompleted: input.nextElementSibling.checked
-        }));
-
-        const feedbackData = {
-            date,
-            type: 'FEEDBACK',
-            content: document.getElementById('feedbackInput').value
-        };
-
-        const timestampData = Array.from(document.querySelectorAll('.timestamp-cell')).map(cell => ({
-            date,
-            type: 'TIMESTAMP',
-            timeSlot: cell.dataset.time,
-            color: cell.style.backgroundColor || '#FFFFFF'
-        }));
-
-        const allData = [...goalData, feedbackData, ...timestampData];
-
-        fetch('/api/planner/saveData', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(allData),
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('Data saved successfully:', data);
-                } else {
-                    console.error('Data saving failed:', data);
-                }
-            })
-            .catch(error => console.error('Error saving data:', error));
-    }
-
-
-
     // 컬러 팔레트에서 색상 선택
-    document.querySelectorAll('.color-option').forEach(function(colorDiv) {
-        colorDiv.addEventListener('click', function() {
-            selectedColor = this.dataset.color;
+    document.querySelectorAll('.color-option').forEach(function (colorDiv) {
+        colorDiv.addEventListener('click', function () {
+            selectedColor = this.dataset.color; // 선택된 색상으로 변경
         });
     });
 
@@ -206,4 +120,69 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error adding event:', error);
             });
     };
+
+    //플래너 저장
+    function saveData() {
+        const timetableData = document.getElementById('timetable') ? document.getElementById('timetable').value : '';
+        const feedbackData = document.getElementById('feedbackInput') ? document.getElementById('feedbackInput').value : '';
+        const goalData = [];
+        const goalCompletions = [];
+
+        // 목표 칸 여러 개 처리 (예: Goal1, Goal2, ...)
+        for (let i = 1; i <= 6; i++) {  // 목표가 6개인 경우
+            const goalInput = document.getElementById('Goal' + i);
+            if (goalInput && goalInput.value.trim() !== "") {
+                goalData.push(goalInput.value);  // 비어 있지 않으면 목표 추가
+                const goalCompletion = document.getElementById('GoalCheck' + i) ? document.getElementById('GoalCheck' + i).checked : false;
+                goalCompletions.push(goalCompletion); // 목표 완료 여부 추가
+            }
+        }
+
+        // 타임스탬프 색상 수집
+        const timestampColors = [];
+        const timestamps = [];
+        const timestampCells = document.querySelectorAll('.timestamp-cell');
+        timestampCells.forEach(cell => {
+            if (cell.style.backgroundColor && cell.style.backgroundColor !== 'rgb(249, 249, 249)') {  // 기본 색상이 아닌 경우
+                timestampColors.push(cell.style.backgroundColor);  // 색상 추가
+                timestamps.push(cell.dataset.time);  // 시간 추가
+            }
+        });
+
+        // 목표가 비어 있지 않으면 목표와 목표 완료 여부를 포함하여 전송
+        if (goalData.length > 0 || timestampColors.length > 0) {  // 목표나 타임스탬프가 있으면
+            const data = {
+                timetable: timetableData,
+                feedback: feedbackData,
+                goals: goalData,           // 목표 목록
+                goalCompletions: goalCompletions, // 목표 완료 여부 목록
+                timestampColors: timestampColors, // 타임스탬프 색상 목록
+                timestamps: timestamps, // 타임스탬프 시간 목록
+                date: selectedDate
+            };
+
+            // 서버로 데이터 전송 (예: POST 요청)
+            fetch('/save-planner', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('데이터가 성공적으로 저장되었습니다!');
+                    } else {
+                        alert('저장 실패');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('저장 중 오류가 발생했습니다.');
+                });
+        } else {
+            alert('목표를 입력해주세요.');
+        }
+    }
 });

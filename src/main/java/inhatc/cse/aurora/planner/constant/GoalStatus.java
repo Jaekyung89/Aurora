@@ -1,4 +1,4 @@
-package inhatc.cse.aurora.goal.constant;
+package inhatc.cse.aurora.planner.constant;
 
 public enum GoalStatus {
     INCOMPLETE, COMPLETE

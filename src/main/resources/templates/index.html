@@ -43,32 +43,36 @@
     <div id="planner-container">
       <header>
         <div id="current-date">오늘 날짜: <span id="clickedDate"></span></div>
-        <div id="schedule-content">오늘의 일정이 여기에 표시됩니다.</div>
       </header>
       <div id="planner-content">
         <!-- 목표 설정 -->
         <div id="goal-setting">
           <h3>목표 설정</h3>
-          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
-          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
-          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
-          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
-          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
-          <div><input type="text" placeholder="목표 입력"><input type="checkbox"></div>
+          <div><input type="text" id="Goal1" placeholder="목표 입력"><input type="checkbox" id="GoalCheck1"></div>
+          <div><input type="text" id="Goal2" placeholder="목표 입력"><input type="checkbox" id="GoalCheck2"></div>
+          <div><input type="text" id="Goal3" placeholder="목표 입력"><input type="checkbox" id="GoalCheck3"></div>
+          <div><input type="text" id="Goal4" placeholder="목표 입력"><input type="checkbox" id="GoalCheck4"></div>
+          <div><input type="text" id="Goal5" placeholder="목표 입력"><input type="checkbox" id="GoalCheck5"></div>
+          <div><input type="text" id="Goal6" placeholder="목표 입력"><input type="checkbox" id="GoalCheck6"></div>
         </div>
 
         <!-- 타임스탬프 -->
         <div id="timestamp-grid">
           <h3>타임스탬프</h3>
           <div id="timestamp-table" class="timestamp-grid"></div>
-        </div>
 
-        <!-- 색상 선택 -->
-        <div id="color-palette">
-          <h3>색상 팔레트</h3>
-          <input type="color" id="colorPicker" value="#ff0000"> <!-- 기본 빨간색 선택 -->
+          <div style="display: flex; justify-content: space-around; margin-top: 10px;">
+            <div class="color-option" data-color="red" style="width: 20px; height: 20px; background-color: red;"></div>
+            <div class="color-option" data-color="blue" style="width: 20px; height: 20px; background-color: blue;"></div>
+            <div class="color-option" data-color="cyan" style="width: 20px; height: 20px; background-color: cyan;"></div>
+            <div class="color-option" data-color="yellow" style="width: 20px; height: 20px; background-color: yellow;"></div>
+            <div class="color-option" data-color="magenta" style="width: 20px; height: 20px; background-color: magenta;"></div>
+            <div class="color-option" data-color="lightgreen" style="width: 20px; height: 20px; background-color: lightgreen;"></div>
+          </div>
+
         </div>
       </div>
+    </div>
 
 
       <!-- 피드백 섹션 -->

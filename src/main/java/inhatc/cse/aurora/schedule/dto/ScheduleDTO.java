@@ -1,4 +1,4 @@
-package inhatc.cse.aurora.calendar.dto;
+package inhatc.cse.aurora.schedule.dto;
 
 import lombok.*;
 
@@ -9,10 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 
-public class EventDTO {
+public class ScheduleDTO {
 
     public String title;
     public String start;
     public String end;
-    public String url;
 }

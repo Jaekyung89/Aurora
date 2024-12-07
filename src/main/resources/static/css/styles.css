@@ -73,6 +73,7 @@ header {
 /* 타임스탬프 섹션 */
 #timestamp-grid {
     grid-column: 2;
+    flex-direction: column;
 }
 
 #timestamp-table {
@@ -93,25 +94,6 @@ header {
 
 .timestamp-cell:hover {
     background-color: #e0e0e0;
-}
-
-/* 색상 팔레트 섹션 */
-#color-palette {
-    grid-column: 2;
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-}
-
-#color-palette h3 {
-    margin-right: 10px;
-}
-
-#colorPicker {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    border: 0.5px solid #000;
 }
 
 

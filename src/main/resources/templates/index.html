@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendar Example</title>
+  <title>PLAN DECK</title>
   <!-- FullCalendar CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
   <!-- 외부 CSS 파일 연결 -->
@@ -25,12 +25,16 @@
     <span class="close close-add-modal">&times;</span>
     <h2>일정 추가</h2>
     <form id="addEventForm">
+
       <label for="title">제목:</label><br>
       <input type="text" id="title" name="title" required><br><br>
+
       <label for="start">시작 날짜:</label><br>
       <input type="date" id="start" name="start" required><br><br>
+
       <label for="end">끝나는 날짜:</label><br>
       <input type="date" id="end" name="end" required><br><br>
+
       <button type="submit">추가</button>
     </form>
   </div>
@@ -48,12 +52,72 @@
         <!-- 목표 설정 -->
         <div id="goal-setting">
           <h3>목표 설정</h3>
-          <div><input type="text" id="Goal1" placeholder="목표 입력"><input type="checkbox" id="GoalCheck1"></div>
-          <div><input type="text" id="Goal2" placeholder="목표 입력"><input type="checkbox" id="GoalCheck2"></div>
-          <div><input type="text" id="Goal3" placeholder="목표 입력"><input type="checkbox" id="GoalCheck3"></div>
-          <div><input type="text" id="Goal4" placeholder="목표 입력"><input type="checkbox" id="GoalCheck4"></div>
-          <div><input type="text" id="Goal5" placeholder="목표 입력"><input type="checkbox" id="GoalCheck5"></div>
-          <div><input type="text" id="Goal6" placeholder="목표 입력"><input type="checkbox" id="GoalCheck6"></div>
+          <div class="goal-row">
+            <div class="color-option" data-color="red" style="width: 20px; height: 20px; background-color: red;"></div>
+            <input type="text" id="Goal1" placeholder="목표 입력">
+            <input type="checkbox" id="GoalCheck1">
+          </div>
+
+          <div class="goal-row">
+            <div class="color-option" data-color="orange" style="width: 20px; height: 20px; background-color: orange;"></div>
+            <input type="text" id="Goal2" placeholder="목표 입력">
+            <input type="checkbox" id="GoalCheck2">
+          </div>
+
+          <div class="goal-row">
+            <div class="color-option" data-color="yellow" style="width: 20px; height: 20px; background-color: yellow;"></div>
+            <input type="text" id="Goal3" placeholder="목표 입력">
+            <input type="checkbox" id="GoalCheck3">
+          </div>
+
+          <div class="goal-row">
+            <div class="color-option" data-color="green" style="width: 20px; height: 20px; background-color: green;"></div>
+            <input type="text" id="Goal4" placeholder="목표 입력">
+            <input type="checkbox" id="GoalCheck4">
+          </div>
+
+          <div class="goal-row">
+            <div class="color-option" data-color="blue" style="width: 20px; height: 20px; background-color: blue;"></div>
+            <input type="text" id="Goal5" placeholder="목표 입력">
+            <input type="checkbox" id="GoalCheck5">
+          </div>
+
+          <div class="goal-row">
+            <div class="color-option" data-color="indigo" style="width: 20px; height: 20px; background-color: indigo;"></div>
+            <input type="text" id="Goal6" placeholder="목표 입력">
+            <input type="checkbox" id="GoalCheck6">
+          </div>
+
+          <div class="goal-row">
+            <div class="color-option" data-color="purple" style="width: 20px; height: 20px; background-color: purple;"></div>
+            <input type="text" id="Goal7" placeholder="목표 입력">
+            <input type="checkbox" id="GoalCheck7">
+          </div>
+
+          <div class="goal-row">
+            <div class="color-option" data-color="lightgreen" style="width: 20px; height: 20px; background-color: lightgreen;"></div>
+            <input type="text" id="Goal8" placeholder="목표 입력">
+            <input type="checkbox" id="GoalCheck8">
+          </div>
+
+          <div class="goal-row">
+            <div class="color-option" data-color="magenta" style="width: 20px; height: 20px; background-color: magenta;"></div>
+            <input type="text" id="Goal9" placeholder="목표 입력">
+            <input type="checkbox" id="GoalCheck9">
+          </div>
+
+          <div class="goal-row">
+            <div class="color-option" data-color="black" style="width: 20px; height: 20px; background-color: black;"></div>
+            <input type="text" id="Goal10" placeholder="목표 입력">
+            <input type="checkbox" id="GoalCheck10">
+          </div>
+
+          <!-- 피드백 섹션 -->
+          <div id="feedback">
+            <h3>피드백</h3>
+            <textarea id="feedbackInput" rows="4" cols="50" placeholder="오늘의 피드백을 적어주세요"></textarea>
+          </div>
+
         </div>
 
         <!-- 타임스탬프 -->
@@ -61,24 +125,7 @@
           <h3>타임스탬프</h3>
           <div id="timestamp-table" class="timestamp-grid"></div>
 
-          <div style="display: flex; justify-content: space-around; margin-top: 10px;">
-            <div class="color-option" data-color="red" style="width: 20px; height: 20px; background-color: red;"></div>
-            <div class="color-option" data-color="blue" style="width: 20px; height: 20px; background-color: blue;"></div>
-            <div class="color-option" data-color="cyan" style="width: 20px; height: 20px; background-color: cyan;"></div>
-            <div class="color-option" data-color="yellow" style="width: 20px; height: 20px; background-color: yellow;"></div>
-            <div class="color-option" data-color="magenta" style="width: 20px; height: 20px; background-color: magenta;"></div>
-            <div class="color-option" data-color="lightgreen" style="width: 20px; height: 20px; background-color: lightgreen;"></div>
-          </div>
-
         </div>
-      </div>
-    </div>
-
-
-      <!-- 피드백 섹션 -->
-      <div id="feedback">
-        <h3>피드백</h3>
-        <textarea id="feedbackInput" rows="4" cols="50" placeholder="오늘의 피드백을 적어주세요"></textarea>
       </div>
     </div>
   </div>

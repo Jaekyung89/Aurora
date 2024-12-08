@@ -18,12 +18,14 @@
 }
 
 /* Planner Container */
-#planner-container {
-    width: 90%;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #000;
-    box-sizing: border-box;
+#planner-content {
+    display: grid;
+    grid-template-columns: 3fr 2fr; /* 목표와 타임스탬프의 비율 조정 */
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 2px solid black;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px; /* 가시성 향상을 위해 글씨 크기 조정 */
 }
 
 /* Header Section */
@@ -40,17 +42,39 @@ header {
 }
 
 /* Planner Content */
-#planner-content {
-    display: grid;
-    grid-template-columns: 2fr 2fr;
-    gap: 20px;
-    padding-top: 20px;
-    border-top: 2px solid black;
+#planner-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #000;
+    box-sizing: border-box;
+}
+
+.goal-row {
 }
 
 /* 목표 설정 섹션 */
 #goal-setting {
-    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* 각 목표 항목 간 간격 줄임 */
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.goal-row {
+    display: flex;
+    grid-template-columns: 20px 1fr 20px; /* 색상, 입력창, 체크박스 */
+    align-items: center;
+    gap: 5px; /* 요소 간 간격 줄임 */
+}
+
+.color-option {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
 #goal-setting h3 {
@@ -64,50 +88,69 @@ header {
 }
 
 #goal-setting input[type="text"] {
-    width: 70%;
     padding: 5px;
-    margin-right: 10px;
     border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
-/* 타임스탬프 섹션 */
+#goal-setting input[type="checkbox"] {
+    transform: scale(1.2); /* 체크박스 크기 조절 */
+}
+
+/* 타임스탬프 테이블 스타일 */
 #timestamp-grid {
-    grid-column: 2;
-    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
 }
 
 #timestamp-table {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1px;
+    grid-template-columns: 50px repeat(6, 1fr); /* 시간 레이블과 셀 배치 */
+    gap: 1px; /* 셀 간격 줄이기 */
     width: 100%;
-    border: 1px solid #000;
+}
+
+.timestamp-row {
+    display: contents; /* 행은 컨텐츠로만 표시 */
+}
+
+.timestamp-time {
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 0;
+    border-right: 1px solid #ccc;
+    background-color: #f4f4f4;
 }
 
 .timestamp-cell {
-    padding: 10px;
+    height: 20px;
+    width: 35px;
     border: 1px solid #ccc;
     text-align: center;
-    cursor: pointer;
     background-color: #f9f9f9;
+    cursor: pointer;
 }
 
 .timestamp-cell:hover {
     background-color: #e0e0e0;
 }
 
-
 /* 피드백 섹션 */
 #feedback {
-    grid-column: 1 / -1;
-    margin-top: 10px;
-    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%; /* 목표 설정과 동일한 폭 */
+    margin-top: 20px;
 }
 
 #feedback textarea {
-    width: 100%;
+    width: 80%; /* 목표 설정 너비와 동일하게 조정 */
     padding: 10px;
     border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none; /* 크기 조정 비활성화 */
     box-sizing: border-box;
 }
 
@@ -146,4 +189,72 @@ header {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+/* 일정 추가 모달 창 스타일 */
+#addEventModal .modal-content {
+    width: 40%; /* 모달 폭 조정 */
+    max-width: 500px; /* 최대 폭 */
+    padding: 20px; /* 내부 여백 */
+    border-radius: 8px; /* 모서리 둥글게 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    background-color: #f9f9f9; /* 배경색 변경 */
+}
+
+/* 입력 필드와 라벨 간격 조정 */
+#addEventForm label {
+    display: block;
+    margin-bottom: 8px; /* 라벨과 입력란 사이 간격 */
+    font-weight: bold; /* 라벨 강조 */
+}
+
+/* 입력 필드 스타일 */
+#addEventForm input[type="text"],
+#addEventForm input[type="date"] {
+    width: 100%; /* 입력 필드 전체 폭 */
+    padding: 10px; /* 내부 여백 */
+    margin-bottom: 15px; /* 입력 필드 간격 */
+    border: 1px solid #ccc; /* 테두리 색상 */
+    border-radius: 4px; /* 테두리 둥글게 */
+    box-sizing: border-box; /* 여백 포함 */
+}
+
+/* 버튼 스타일 */
+#addEventForm button {
+    padding: 10px 20px; /* 버튼 크기 */
+    background-color: #007bff; /* 버튼 배경색 */
+    color: #fff; /* 버튼 텍스트 색상 */
+    border: none; /* 버튼 테두리 제거 */
+    border-radius: 4px; /* 둥근 버튼 */
+    cursor: pointer; /* 클릭 포인터 */
+    font-size: 16px; /* 텍스트 크기 */
+    width: 100%; /* 버튼 폭 전체 */
+}
+
+#addEventForm button:hover {
+    background-color: #0056b3; /* 버튼 호버 시 색상 변경 */
+}
+
+/* 모달 닫기 버튼 스타일 */
+.close-add-modal {
+    font-size: 24px;
+    font-weight: bold;
+    color: #aaa;
+    float: right;
+    cursor: pointer;
+}
+
+.close-add-modal:hover {
+    color: #000;
+}
+
+/* Planner 모달 창 스타일 */
+#plannerModal .modal-content {
+    width: 70%; /* 모달 창 폭 */
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    background-color: #f9f9f9; /* 배경색 */
+    box-sizing: border-box;
 }
